@@ -30,7 +30,7 @@
 				
 				<?php
 				include 'connect.php';
-				mysql_select_db("gameball", $dataBase);				
+				mysql_select_db("hig", $dataBase);				
 				?>
 				
 				<form id="parameters">

@@ -10,7 +10,7 @@
    
 	<?php	
 	include 'connect.php';
-	mysql_select_db("gameball", $dataBase);	
+	mysql_select_db("gameMetrics", $dataBase);	
 	
 	include	'functions.php';
 	

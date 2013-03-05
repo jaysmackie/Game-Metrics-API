@@ -1,23 +1,24 @@
-metricID=<?php
+<?php
 
 require("db.php");
 
 if ($_REQUEST["metricID"] && $_REQUEST["playID"] && $_REQUEST["eventType"] && $_REQUEST["eventSubtype"] != "")
 {
-	$metricID = $_REQUEST["metricID"];
-    $playID = $_REQUEST["playID"];
-    $eventType =  $_REQUEST["eventType"];
-    $eventSubtype =  $_REQUEST["eventSubtype"];
+	$_metricID = $_REQUEST["metricID"];
+    $_playID = $_REQUEST["playID"];
+    $_eventType =  $_REQUEST["eventType"];
+    $_eventSubtype =  $_REQUEST["eventSubtype"];
 
-	$gameTime = isset($_REQUEST['gameTime']) ? $_REQUEST['gameTime'] : 0;
-	$_x = isset($_REQUEST['_x']) ? $_REQUEST['_x'] : -1;
-	$_y = isset($_REQUEST['_y']) ? $_REQUEST['_y'] : -1;
-	$_z = isset($_REQUEST['_z']) ? $_REQUEST['_z'] : -1;
-	$_magnitude = isset($_REQUEST['_magnitude']) ? $_REQUEST['_magnitude'] : -1;
+	$_gameTime = isset($_REQUEST['gameTime']) ? $_REQUEST['gameTime'] : 0;
+	$_x = isset($_REQUEST['x']) ? $_REQUEST['x'] : -999999;
+	$_y = isset($_REQUEST['y']) ? $_REQUEST['y'] : -999999;
+	$_z = isset($_REQUEST['z']) ? $_REQUEST['z'] : -999999;
+	$_magnitude = isset($_REQUEST['magnitude']) ? $_REQUEST['magnitude'] : -999999;
+	$_dataString = isset($_REQUEST['dataString']) ? $_REQUEST['dataString'] : "";
 			
 	$query = "INSERT INTO eventdata 
 				VALUES
-				(NULL, '$metricID', '$playID', NULL, '$gameTime', '$eventType', '$eventSubtype', '$_x', '$_y', '$_z', '$_magnitude')";
+				(NULL, '$_metricID', '$_playID', NULL, '$_gameTime', '$_eventType', '$_eventSubtype', '$_x', '$_y', '$_z', '$_magnitude', '$_dataString')";
 
 	$result = mysql_query($query);			
 
@@ -32,7 +33,7 @@ if ($_REQUEST["metricID"] && $_REQUEST["playID"] && $_REQUEST["eventType"] && $_
 			$count = $row->c;
 			if ($count >= 0)
 			{
-				echo '{ "status": "ok", Events for ' . $metricID. ' = ' .$row->c. '}';
+				echo '{ "status": "ok", "Events for ' . $metricID. '": ' .$row->c. '}';
 				$error = 1;
 			}
 		}
@@ -56,5 +57,6 @@ else
 		echo '{ "status": "eventType", "reason" : "bad param"}';
 	else if (!$_REQUEST["eventSubtype"] || $_REQUEST["message"] == "")
 		echo '{ "status": "eventSubtype", "reason" : "bad param"}';
+		
 }
 ?>
